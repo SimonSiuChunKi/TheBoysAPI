@@ -1,0 +1,6 @@
+fastapi
+mangum
+uvicorn
+pydantic_core==2.10.1
+pydantic==1.10.0a1
+pymysql
