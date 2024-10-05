@@ -4,7 +4,7 @@ import pymysql
 db_config = {
     'host': 'the-boys-rds.cxcoo02qemtr.ap-southeast-2.rds.amazonaws.com',
     'user': 'admin',
-    'password': 'm?!wakPGps-:HhI%O4b1I{.*fbF(',
+    'password': 'nZXne~-.3[X6>hgMt4%SDBB|tJaB',
     'database': 'TheBoys',
     'port': 3306
 }
