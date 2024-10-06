@@ -157,10 +157,15 @@ def start_a_lesson_db(user_id, lesson_id):
     except Exception as e:
         print(f"Failed to start the lesson. Error: {e}")
         return False
+    
+class CompleteLessonRequest(BaseModel):
+    user_id: str
+    lesson_id: int
+    auslan_sign: str
 
-@router.get("/completed_a_lesson")
-async def completed_a_lesson(user_id: str = Query(..., description="Provide the user id"), lesson_id: int = Query(..., description="Provide the lesson id"), auslan_sign: str = Query(..., description="Provide the sign")):
-    return completed_a_lesson(user_id, lesson_id, auslan_sign)
+@router.post("/completed_a_lesson")
+async def completed_a_lesson(request: StartLessonRequest):
+    return completed_a_lesson(request.user_id, request.lesson_id, request.auslan_sign)
 
 def completed_a_lesson(user_id, lesson_id, auslan_sign):
     try:
