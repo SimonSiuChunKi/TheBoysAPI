@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException
 from fastapi import Query
 from pydantic import BaseModel
 import ast
+from datetime import datetime
 
 
 
@@ -158,14 +159,14 @@ def start_a_lesson_db(user_id, lesson_id):
         return False
 
 @router.get("/completed_a_lesson")
-async def completed_a_lesson(user_id: int = Query(..., description="Provide the user id"), lesson_id: int = Query(..., description="Provide the lesson id")):
-    return completed_a_lesson(user_id, lesson_id)
+async def completed_a_lesson(user_id: str = Query(..., description="Provide the user id"), lesson_id: int = Query(..., description="Provide the lesson id"), auslan_sign: str = Query(..., description="Provide the sign")):
+    return completed_a_lesson(user_id, lesson_id, auslan_sign)
 
-def completed_a_lesson(user_id, lesson_id):
+def completed_a_lesson(user_id, lesson_id, auslan_sign):
     try:
         with connection.cursor() as cursor:
             # Execute a query
-            sql = f"UPDATE LessonHistory SET Status = 'Completed', DateCompleted = NOW() WHERE UserID = {user_id} AND LessonID = {lesson_id} AND Status = 'In Progress';"
+            sql = f"UPDATE LessonHistory SET Status = 'Completed', DateCompleted = {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} WHERE UserID = '{user_id}' AND LessonID = {lesson_id} AND Status = 'In Progress' AND AuslanSign = {auslan_sign};"
             cursor.execute(sql)
             
     except Exception as e:
